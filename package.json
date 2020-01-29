@@ -1,0 +1,16 @@
+{
+  "name": "cucumber-puppeteer",
+  "version": "1.0.0",
+  "description": "Automated tests with cucumber and puppeteer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kanstantsin Kulak",
+  "license": "ISC",
+  "dependencies": {
+    "cucumber": "^6.0.5",
+    "cucumber-html-reporter": "^5.1.0",
+    "puppeteer": "^2.1.0"
+  }
+}
