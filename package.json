@@ -4,11 +4,13 @@
   "description": "Automated tests with cucumber and puppeteer",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cucumber-js -f json:cucumber_report.json",
+    "test:report": "node report.js"
   },
-  "author": "Kanstantsin Kulak",
+  "author": "Kanstantsin Kulak <kkulak24@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.2.0",
     "cucumber": "^6.0.5",
     "cucumber-html-reporter": "^5.1.0",
     "puppeteer": "^2.1.0"
