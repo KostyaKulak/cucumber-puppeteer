@@ -9,6 +9,9 @@ class ContactUs {
         this.firstname = "";
         this.lastname = "";
         this.email = "";
+        this.phone = "";
+        this.company = "";
+        this.title = "";
     }
 
     async openContactUsPage() {
@@ -23,6 +26,12 @@ class ContactUs {
         this.email = email;
     }
 
+    setOptionalFields(phone, company, title) {
+        this.phone = phone;
+        this.company = company;
+        this.email = title;
+    }
+
     async writeFirstName() {
         const firstnameSelector = "[name='firstname']";
         await this.page.waitForSelector(firstnameSelector);
@@ -30,11 +39,11 @@ class ContactUs {
         await this.firstnameElement.type(this.firstname);
     }
 
-    async writeLastname() {
+    async writeLastName() {
         const lastnameSelector = "[name='lastname']";
         await this.page.waitForSelector(lastnameSelector);
-        this.emailElement = await this.page.$(lastnameSelector);
-        await this.emailElement.type(this.lastname);
+        this.lastnameElement = await this.page.$(lastnameSelector);
+        await this.lastnameElement.type(this.lastname);
     }
 
     async writeEmail() {
@@ -44,19 +53,39 @@ class ContactUs {
         await this.emailElement.type(this.email);
     }
 
-    async submit() {
-        await this.inputElement.press("Enter");
+    async writePhone() {
+        const phoneSelector = "[name='lastname']";
+        await this.page.waitForSelector(phoneSelector);
+        this.phoneElement = await this.page.$(phoneSelector);
+        await this.phoneElement.type(this.phone);
     }
 
-    // async checkTodoIsInList() {
-    //     const todoSelector = "ul.todo-list li label";
-    //     await this.page.waitForSelector(todoSelector);
-    //     const todo = await this.page.evaluate(
-    //         todoSelector => document.querySelector(todoSelector).innerText,
-    //         todoSelector
-    //     );
-    //     expect(this.todo).to.eql(todo);
-    // }
+    async writeCompany() {
+        const companySelector = "[name='company']";
+        await this.page.waitForSelector(companySelector);
+        this.companyElement = await this.page.$(companySelector);
+        await this.companyElement.type(this.company);
+    }
+
+    async writeTitle() {
+        const titleSelector = "[name='jobtitle']";
+        await this.page.waitForSelector(titleSelector);
+        this.titleElement = await this.page.$(titleSelector);
+        await this.titleElement.type(this.title);
+    }
+
+    async submit() {
+        const submitSelector = "[type='submit']";
+        await this.page.waitForSelector(submitSelector);
+        this.submitElement = await this.page.$(submitSelector);
+        await this.page.setRequestInterception(true);
+        this.page.on("response", response => {
+            if (request.url().includes("forms.hsforms.com")) {
+                expect(response.status()).to.equal(200);
+            }
+        });
+        await this.submitElement.click();
+    }
 
     async closeContactUsPage() {
         await this.browser.close();
